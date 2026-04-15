@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+/*
+ * Complete the 'timeConversion' function below.
+ *
+ * The function is expected to return a STRING.
+ * The function accepts STRING s as parameter.
+ */
+
+string timeConversion(string s) {
+    // Extract hour, minutes, seconds, and the AM/PM indicator
+    int hour = stoi(s.substr(0, 2));
+    string minutes_seconds = s.substr(2, 6); // Includes :mm:ss
+    string am_pm = s.substr(8, 2);
+
+    if (am_pm == "AM") {
+        if (hour == 12) {
+            hour = 0; // 12 AM is 00 in 24-hour format
+        }
+    } else { // It's PM
+        if (hour != 12) {
+            hour += 12; // Add 12 for PM hours except 12 PM
+        }
+    }
+
+    // Format the hour back to string with leading zeros
+    stringstream ss;
+    ss << setfill('0') << setw(2) << hour << minutes_seconds;
+    
+    return ss.str();
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string s;
+    getline(cin, s);
+
+    string result = timeConversion(s);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
